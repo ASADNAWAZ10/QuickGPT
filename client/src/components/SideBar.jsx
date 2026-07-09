@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 
 const SideBar = ({isMenuOpen, setisMenuOpen}) => {
-  const {chats,navigate,  setSelectedChat, theme, setTheme, user,
+  const {chats,navigate, setSelectedChat, theme, setTheme, user,
     createNewChat, axios, setChats, fetchUsersChats, token, setToken} = useAppContext();
   const [search, setSearch] = useState('')
 
@@ -138,8 +138,8 @@ const SideBar = ({isMenuOpen, setisMenuOpen}) => {
           <img src={assets.usericon} alt="userIcon" className='w-7 rounded-full' />
           <p className='flex-1 text-sm dark:text-primary truncate'>
             {user ? user.name : "Login your account"}</p>
-            {user && <img onClick={logout} src={assets.logout} alt='logout' className='h-5 cursor-pointer hidden
-            not-dark:invert group-hover:block'/>}  
+            {user && <img onClick={logout} src={assets.logout} alt='logout' 
+            className='h-5 cursor-pointer hidden not-dark:invert group-hover:block'/>}  
          </div>
 
          <img onClick={()=> setisMenuOpen(false)} src={assets.closeimage} alt="CloseIcon" className='absolute top-3 right-3 

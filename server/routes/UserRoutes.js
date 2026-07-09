@@ -7,6 +7,6 @@ const userRouter = express.Router();
 userRouter.post('/register', registerUser)
 userRouter.post('/login', loginUser)
 userRouter.get('/data',protect, getUser)
-userRouter.get('/published-image', getPushlishedImages)
+userRouter.get('/published-images', getPushlishedImages)
 
 export default userRouter;

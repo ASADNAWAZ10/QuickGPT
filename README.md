@@ -131,7 +131,6 @@ Contributions are welcome.
 
 GitHub: https://github.com/ASADNAWAZ10
 
-
 Email: [asadnawazofficial20@gmail.com](mailto:asadnawazofficial20@gmail.com)
 
 ## 📄 License

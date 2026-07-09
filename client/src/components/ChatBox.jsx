@@ -24,9 +24,12 @@ const ChatBox = () => {
       setLoading(true)
     const promptCopy = prompt
     setPrompt('')
-    setMessage(prev => [...prev, {role: 'user', content: prompt, timestamp: Date.now(), isImage: false}])
+    setMessage(prev => [...prev, {role: 'user', content: prompt, timestamp: Date.now(),
+       isImage: false}])
 
-    const {data} = await axios.post(`/api/message/${mode}`, {chatId: selectedChat._id, prompt, isPbulished}, {headers: {Athorization: token}})
+    const {data} = await axios.post(`/api/message/${mode}`,
+       {chatId: selectedChat._id, prompt, isPbulished},
+       {headers: {Athorization: token}})
     if(data.success){
       setMessage(prev => [...prev, data.reply])
 
