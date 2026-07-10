@@ -11,7 +11,7 @@ export const textMessageController = async (req, res) => {
         const {chatId, prompt} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
-        chat.messages.push({role: "user", content: prompt, timestamp: Date.now(),
+        chat.message.push({role: "user", content: prompt, timestamp: Date.now(),
     isImage: false})
 
     const {choices} = await openai.chat.completions.create({
@@ -26,7 +26,7 @@ export const textMessageController = async (req, res) => {
 
     const reply = {...choices[0].message, timestamp:Date.now(), isImage: false}
     res.json({success: true, reply})
-    chat.messages.push(reply)
+    chat.message.push(reply)
     await chat.save()
 
     await User.updateOne({_id: userId}, {$inc: {credits: -1}})

@@ -25,7 +25,7 @@ import Stripe from "stripe";
   name : "Premium",
   price : 30,
   credits : 1000,
-  Features : ['1000 text generators', '500 iamges generators',
+  Features : ['1000 text generators', '500 images generators',
       'standard support', '24/7 VIP support', 'Access to the pro models', 
     'Dedicated account manager' ]
 },
@@ -60,7 +60,7 @@ export const purchasePlans = async (req, res) => {
         })
 
         const {origin} = req.headers
-        const session = await Stripe.checkout.sessions.create({
+        const session = await Stripe.Checkout.sessions.create({
        
             lines_items: [
                 {
