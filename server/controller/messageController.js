@@ -19,7 +19,7 @@ export const textMessageController = async (req, res) => {
         messages: [
             {
                 role: "user",
-                content: "Explain to me how AI works",
+                content:prompt,
             },
         ],
     });
@@ -38,7 +38,7 @@ export const textMessageController = async (req, res) => {
 } 
 
 //Image Generator Message Controller
-export  const imageGeneratorController = async(req, res) => {
+export const imageGeneratorController = async (req, res) => {
     try {
         const userId = req.user._id;
         if(req.user.credits < 2){
@@ -47,11 +47,11 @@ export  const imageGeneratorController = async(req, res) => {
         const {prompt, chatId, isPublished} = req.body
         const chat = await Chat.findOne({userId, _id: chatId})
 
-        chat.mesages.push({
+        chat.message.push({
             role: "user",
             content: prompt,
             timestamp: Date.now(), 
-            isIamge: false
+            isIamge: true
         })
         const encodedPrompt = encodeURIComponent(prompt)
 
@@ -64,6 +64,7 @@ export  const imageGeneratorController = async(req, res) => {
         const base64Image = `data:image/png;base64,${Buffer.from(aiImageResponse.
             data, "binary"
         ).toString('base64')}`;
+        
         const UploadResponse = await imageGeneratorController.upload({
             file: base64Image,
             fileName: `${Date.now()}.png`,
