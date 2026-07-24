@@ -1,9 +1,9 @@
 import { request } from 'express'
-import stripe from 'stripe'
+import Stripe from 'stripe'
 import Transaction from '../models/Transaction.js'
 
 export const stripeWebhook = async (req, res) => {
-    const stripe = new stripe(process.env.STRIPE_SECRET_KEY)
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
     const sig = request.headers["stripe-signature"]
 
     let event;
