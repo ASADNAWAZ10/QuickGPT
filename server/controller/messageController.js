@@ -1,7 +1,7 @@
 import axios from "axios"
 import Chat from "../models/chat.js"
 import User from "../models/User.js"
-import imageKit from '../config/imagekit.js'
+// import imageKit from '../config/imagekit.js'
 import openai from '../config/openai.js'
 
 //Text-based AI chat Message controller

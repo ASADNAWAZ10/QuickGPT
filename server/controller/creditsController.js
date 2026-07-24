@@ -7,7 +7,7 @@ import Stripe from "stripe";
     name : "Basic",
     price : 10,
     credits : 100,
-    Features : ['100 text generators', '50 iamges generators',
+    Features : ['100 text generators', '50 images generators',
         'standard support', 'Access to the basic models']
 },
 
@@ -16,7 +16,7 @@ import Stripe from "stripe";
     name : "Pro",
     price : 20,
     credits : 100,
-    Features : ['500 text generators', '50 iamges generators',
+    Features : ['500 text generators', '50 images generators',
         'standard support', 'Access to the pro models']
 },
 
