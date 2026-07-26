@@ -1,5 +1,5 @@
 import Transaction from "../models/Transaction.js"
-import Stripe from "stripe";
+import stripe from 'stripe'
 
  const plans = [
     {
@@ -39,7 +39,7 @@ export const getPlans = async (req, res) => {
     }
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripeInstances = new stripe(process.env.STRIPE_SECRET_KEY)
 
 export const purchasePlans = async (req, res) => {
     try {
@@ -60,7 +60,7 @@ export const purchasePlans = async (req, res) => {
         })
 
         const {origin} = req.headers
-        const session = await Stripe.Checkout.sessions.create({
+        const session = await stripe.Checkout.sessions.create({
        
             lines_items: [
                 {
