@@ -1,9 +1,9 @@
 import { request } from 'express'
-import Stripe from 'stripe'
+import stripe from 'stripe'
 import Transaction from '../models/Transaction.js'
 
 export const stripeWebhook = async (req, res) => {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
     const sig = request.headers["stripe-signature"]
 
     let event;
@@ -19,7 +19,7 @@ export const stripeWebhook = async (req, res) => {
         switch(event.type){
             case "payment_intent.succeeded":{
                 const paymentIntent = event.data.object;
-                const sessionList = await stripe.checkout.sessions.list({
+                const sessionList = await stripeInstance.checkout.sessions.list({
                     payment_intent: paymentIntent.id,
                 })
 
