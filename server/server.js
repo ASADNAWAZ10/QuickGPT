@@ -25,11 +25,11 @@ app.use('/api/chat', chatRouter)
 app.use('/api/message', messageRouter)
 app.use('/api/credit', creditRouter )
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`);
+  app.listen(5000, () => {
+    console.log("Server running");
   });
 }
 
