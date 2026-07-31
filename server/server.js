@@ -20,7 +20,7 @@ app.use(express.json())
 
 //Routes
 app.get('/', (req, res) => res.send('server is live'))
-app.get('/api/user', userRouter)
+app.use('/api/user', userRouter)
 app.use('/api/chat', chatRouter)
 app.use('/api/message', messageRouter)
 app.use('/api/credit', creditRouter )
