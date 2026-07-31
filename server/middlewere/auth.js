@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/User.js';
 
  const protect = async (req, res, next) => {
-    let token = req.header.authorization;
+    let token = req.headers.authorization;
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
