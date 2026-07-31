@@ -2,7 +2,7 @@ import express from 'express'
 import 'dotenv/config'
 import cors from 'cors'
 import connectDB from './config/db.js';
-import UserRouter from './routes/UserRoutes.js';
+import userRouter from './routes/UserRoutes.js'
 import chatRouter from './routes/chatRoutes.js';
 import messageRouter from './routes/messageRoutes.js';
 import creditRouter from './routes/creditRoutes.js';
@@ -20,10 +20,11 @@ app.use(express.json())
 
 //Routes
 app.get('/', (req, res) => res.send('server is live'))
-app.get('/api/user', UserRouter)
+app.get('/api/user', userRouter)
 app.use('/api/chat', chatRouter)
 app.use('/api/message', messageRouter)
 app.use('/api/credit', creditRouter )
+
 
 const PORT = process.env.PORT || 5000
 
