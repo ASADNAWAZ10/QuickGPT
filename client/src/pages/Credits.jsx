@@ -4,9 +4,9 @@ import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 
 const Credits = () => {
-
-   const [plans, setPlan] = useState([])
+   const [plans, setPlans] = useState([])
    const [loading, setLoading] = useState(true)
+
    const {axios, token} = useAppContext()
 
    const fetchPlans = async () => {
@@ -15,7 +15,7 @@ const Credits = () => {
       header: {Authorization: token}
     })
     if (data.success){
-      setPlan(data.plans)
+      setPlans(data.plans)
     }else {
       toast.error(data.message || 'failed to fetch plans')
     }
@@ -54,7 +54,7 @@ const Credits = () => {
       <div className='flex flex-wrap justify-center gap-8'>
          {plans.map((plan)=>(
           <div key={plan._id} className={`border border-gray-200 dark:border-purple-700 
-          rounded-lg shadow hover:shadow-lg transition-shadow p-6 min-w-[300px] flex flex-col 
+          rounded-lg shadow hover:shadow-lg transition-shadow p-6 min-w-75 flex flex-col 
           ${plan._id === "pro" ? 'bg-purple-50 dark:bg-purple-900': 'bg-white dark:bg-transparent'}`}>
 
             <div className='flex-1'>

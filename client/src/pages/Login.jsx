@@ -30,9 +30,9 @@ const Login = () => {
 
   return (
       <form onSubmit={handleSubmit}
-      className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
+      className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-88 text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
           <p className="text-2xl font-medium m-auto">
-              <span className="text-indigo-500">User</span> {state === "login" ? "Login" : "Sign Up"}
+              <span className="text-primary">User</span> {state === "login" ? "Login" : "Sign Up"}
           </p>
           {state === "register" && (
               <div className="w-full">

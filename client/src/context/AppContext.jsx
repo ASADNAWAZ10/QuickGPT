@@ -52,7 +52,10 @@ export const AppContextProvider = ({children}) => {
                     await createNewChat();
                     return fetchUsersChats();
                 }else {
-                    setSelectedChat(data.chats[0])
+                    setSelectedChat((prev)=>{
+                        if(!prev) return data.chats[0];
+                        return prev
+                    })
                 }
             } else {
                 toast.error(data.message)
@@ -91,7 +94,7 @@ export const AppContextProvider = ({children}) => {
 
     const value = {navigate, user, setUser, fetchUser, chats, setChats,
                    selectedChat, setSelectedChat, theme, setTheme, createNewChat, loadingUser, 
-                   fetchUsersChats,token, setToken, axios,  }
+                   fetchUsersChats,token, setToken, axios}
     return(
         <AppContext.Provider value={value} >
          {children}

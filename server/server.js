@@ -14,8 +14,10 @@ app.post('/api/stripe', express.raw({type: 'application/json'}),stripeWebhook)
 
 await connectDB().catch(err => console.log("db error", err))
 
+const allowdOrigins = ["http://localhost:5173", "https://quick-gpt-project-sigma.vercel.app"]
+
 //Middlewere
-app.use(cors())
+app.use(cors({ origin: allowdOrigins, credentials: true }))
 app.use(express.json())
 
 //Routes

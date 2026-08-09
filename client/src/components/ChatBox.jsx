@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAppContext } from '../context/AppContext.jsx'
 import { assets } from '../assets/assets';
-import Messaage from './Message.jsx'
+import Message from './Message.jsx'
 import toast from 'react-hot-toast';
 
 const ChatBox = () => {
@@ -15,7 +15,7 @@ const ChatBox = () => {
 
   const [prompt, setPrompt] = useState('')
   const [mode, setMode] = useState('text')
-  const [isPbulished , setIsPublished] = useState(false)
+  const [isPublished , setIsPublished] = useState(false)
 
   const onsubmit = async (e) => {
    try {
@@ -24,13 +24,13 @@ const ChatBox = () => {
       setLoading(true)
     const promptCopy = prompt
     setPrompt('')
-    setMessage(prev => [...prev, {role: 'user', content: prompt, timestamp: Date.now(),
+    setMessage(prev => [...prev, {role: 'user', content:prompt, timestamp: Date.now(),
        isImage: false}])
 
     const {data} = await axios.post(`/api/message/${mode}`,
-       {chatId: selectedChat._id, prompt, isPbulished},
-       {headers: {Athorization: token}})
-    if(data.success){
+       {chatId: selectedChat._id, prompt, isPublished},
+       {headers: {Authorization: token}})
+    if( data.success){
       setMessage(prev => [...prev, data.reply])
 
       if(mode === 'image'){
@@ -46,6 +46,8 @@ const ChatBox = () => {
     toast.error(error.message)
    }finally{
     setPrompt('')
+    setLoading(false)
+
    }
   }
 
@@ -65,7 +67,7 @@ const ChatBox = () => {
   },[message])
 
   return (
-    <div className='flex-1 flex flex-col justify-between m-5 md:m-10 xl:30 max-md:mt-14
+    <div className='flex-1 flex flex-col justify-between m-5 md:m-10 xl:m-30 max-md:mt-14
    2xl:pr-40 '>
 
     {/* Chat Message */}
@@ -79,7 +81,7 @@ const ChatBox = () => {
         </div>
        )}  
 
-       {message?.map((message, index)=> <message key={index} message={message} />)}
+       {message?.map((message, index)=> <Message key={index} message={message} />)}
 
        {/* Three Dots loading */}
        {
@@ -97,13 +99,13 @@ const ChatBox = () => {
     {mode === 'image' && (
       <label className='inline-flex items-center gap-2 mb-3 text-sm mx-auto'>
        <p className='text-xs'>Published Generated Image to community</p>
-       <input type="checkbox" className='cursor-pointer' checked={isPbulished} 
-       onChange={(e)=> setIsPublished(e.target.checked)} value={isPbulished} />
+       <input type="checkbox" className='cursor-pointer' checked={isPublished} 
+       onChange={(e)=> setIsPublished(e.target.checked)} value={isPublished} />
       </label>
     )}
 
     {/* Prompt Input Box */}
-    <form onChange={onsubmit} className='bg-primary/20 dark:bg-[#583C79]/30 border border-primary 
+    <form onSubmit={onsubmit} className='bg-primary/20 dark:bg-[#583C79]/30 border border-primary 
     dark:border-[#80609F]/30 rounded-full w-full max-w-2xl p-3 pl-4 mx-auto flex 
     gap-4 items-center'>
           <select onChange={(e)=>setMode(e.target.value)} value={mode} 

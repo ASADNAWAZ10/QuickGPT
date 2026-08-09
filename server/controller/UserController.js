@@ -80,7 +80,7 @@ export const getPushlishedImages = async(req, res) => {
             }
         }
         ])
-        res.json({success: true, images:error.message})
+        res.json({success: true, images:publishedImageMessage})
     } catch (error) {
         return res.json({success: false, message: error.message})
     }
