@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { assets } from '../assets/assets'
 import moment from 'moment'
-import Markdown from 'react-markdown'
+// import Markdown from 'react-markdown'
 import Prism from "prismjs"
 
 const Message = ({message}) => {
@@ -32,10 +32,7 @@ const Message = ({message}) => {
            ):
            (
             <div className='text-sm dark:text-primary reset-tw'> 
-             console.log(message)
-           console.log(message.content)
-          console.log(typeof message.content)
-          <Markdown> {message.content}</Markdown></div>   
+           {message.content}</div>   
            )}
            <span className='text-sm text-gray-400 dark:text-[#B1A6C0]'> 
             {moment(message.timestamp).fromNow()} </span> 

@@ -1,7 +1,6 @@
 import axios from "axios"
 import Chat from "../models/chat.js"
 import User from "../models/User.js"
-// import imageKit from '../config/imagekit.js'
 import openai from '../config/openai.js'
 
 //Text-based AI chat Message controller
@@ -11,7 +10,7 @@ export const textMessageController = async (req, res) => {
         const {chatId, prompt} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
-        chat.message.push({role: "user", content: prompt, timestamp: Date.now(),
+        chat.message.push({role: "user", content: prompt, timestamps: Date.now(),
     isImage: false})
 
     const {choices} = await openai.chat.completions.create({
@@ -24,7 +23,7 @@ export const textMessageController = async (req, res) => {
         ],
     });
 
-    const reply = {...choices[0].message, timestamp:Date.now(), isImage: false}
+    const reply = {...choices[0].message, timestamps:Date.now(), isImage: false}
     res.json({success: true, reply})
     chat.message.push(reply)
     await chat.save()
