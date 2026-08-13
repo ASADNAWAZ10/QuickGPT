@@ -49,7 +49,7 @@ export const imageGeneratorController = async (req, res) => {
         chat.message.push({
             role: "user",
             content: prompt,
-            timestamp: Date.now(), 
+            timestamps: Date.now(), 
             isIamge: true
         })
         const encodedPrompt = encodeURIComponent(prompt)
