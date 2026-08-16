@@ -1,12 +1,18 @@
 import axios from "axios"
 import Chat from "../models/chat.js"
-import User from "../models/User.js"
+import User from "../models/User.js" 
 import openai from '../config/openai.js'
+import imagekit from "../config/imagekit.js"
 
 //Text-based AI chat Message controller
 export const textMessageController = async (req, res) => {
     try {
         const userId = req.user._id
+
+        if(req.user.credits < 1){
+            return res.json({success: false, message: "you don't have enough credits to use this feature"})
+        }
+
         const {chatId, prompt} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
@@ -55,7 +61,7 @@ export const imageGeneratorController = async (req, res) => {
         const encodedPrompt = encodeURIComponent(prompt)
 
         const generatedImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/
-        ik-genimg-${encodedPrompt}/quickgpt/${Date.now()}.png?tr=w-800,h-800`;
+        ik-genimg-prompt-${encodedPrompt}/quickgpt/${Date.now()}.png?tr=w-800,h-800`;
 
         const aiImageResponse = await axios.get(generatedImageUrl, {responseType:
             "arraybuffer"
@@ -64,7 +70,7 @@ export const imageGeneratorController = async (req, res) => {
             data, "binary"
         ).toString('base64')}`;
         
-        const UploadResponse = await imageGeneratorController.upload({
+        const UploadResponse = await imagekit.upload({
             file: base64Image,
             fileName: `${Date.now()}.png`,
             folder: "quickgpt"
