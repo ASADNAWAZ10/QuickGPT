@@ -1,8 +1,9 @@
-import axios from "axios"
+// import axios from "axios"
 import Chat from "../models/chat.js"
 import User from "../models/User.js" 
 import openai from '../config/openai.js'
 import imagekit from "../config/imagekit.js"
+
 
 //Text-based AI chat Message controller
 export const textMessageController = async (req, res) => {
@@ -56,25 +57,33 @@ export const imageGeneratorController = async (req, res) => {
             role: "user",
             content: prompt,
             timestamps: Date.now(), 
-            isIamge: true
+            isImage: true
         })
         const encodedPrompt = encodeURIComponent(prompt)
 
-        const generatedImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/
-        ik-genimg-prompt-${encodedPrompt}/quickgpt/${Date.now()}.png?tr=w-800,h-800`;
+        const result = await openai.images.generate({
+            model: "gpt-image-1",
+            prompt: encodedPrompt,
+            size: "1024 * 1024",
+            quality: "medium",
+        })
 
-        const aiImageResponse = await axios.get(generatedImageUrl, {responseType:
-            "arraybuffer"
-        })
-        const base64Image = `data:image/png;base64,${Buffer.from(aiImageResponse.
-            data, "binary"
-        ).toString('base64')}`;
-        
+        const base64Image = result.data?.[0]?.b64_json;
+
+        if(!base64Image){
+            return res.status(500).json({
+                success: false,
+                message: "AI did not return an image"
+            });
+        }
+
+        const imageBuffer = Buffer.from(base64Image, "base64");
+
         const UploadResponse = await imagekit.upload({
-            file: base64Image,
-            fileName: `${Date.now()}.png`,
-            folder: "quickgpt"
-        })
+            file:imageBuffer,
+            fileName: `ai-${Date.now()}.png`,
+            folder: "/quick-gpt/generated-images",
+        });
 
         const reply = {
             role: 'assistant',
@@ -84,7 +93,6 @@ export const imageGeneratorController = async (req, res) => {
             isPublished
         }
         res.json({success:true, reply})
-
         chat.message.push(reply)
         await chat.save()
         await User.updateOne({_id:userId}, {$inc: {credits: -2}})

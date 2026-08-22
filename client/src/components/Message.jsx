@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { assets } from '../assets/assets'
 import moment from 'moment'
-// import Markdown from 'react-markdown'
+import Markdown from 'react-markdown'
+import remarkGfm from "remark-gfm"
 import Prism from "prismjs"
 
 const Message = ({message}) => {
@@ -17,7 +18,6 @@ const Message = ({message}) => {
             <p className='text-sm dark:text-primary'>{message.content}</p>
             <span className='text-sm text-gray-400 dark:text-[#81A6C0]'>
               {moment(message.timestamp).fromNow()}
-
             </span>
           </div>
            <img src={assets.usericon} alt="UserIcon" className='w-8 rounded-full' />
@@ -32,7 +32,10 @@ const Message = ({message}) => {
            ):
            (
             <div className='text-sm dark:text-primary reset-tw'> 
-           {message.content}</div>   
+           <Markdown remarkPlugins={[remarkGfm]}>
+           {message.content}
+            </Markdown>
+            </div>   
            )}
            <span className='text-sm text-gray-400 dark:text-[#B1A6C0]'> 
             {moment(message.timestamp).fromNow()} </span> 
