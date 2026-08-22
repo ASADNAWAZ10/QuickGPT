@@ -62,7 +62,7 @@ export const imageGeneratorController = async (req, res) => {
         // const encodedPrompt = encodeURIComponent(prompt)
 
         const result = await openai.images.generate({
-            model: "gemini-2.5-flash",
+            model: "imagen-4",
             prompt: prompt,
             size: "1024 * 1024",
             quality: "standard",
