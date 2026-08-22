@@ -62,10 +62,10 @@ export const imageGeneratorController = async (req, res) => {
         const encodedPrompt = encodeURIComponent(prompt)
 
         const result = await openai.images.generate({
-            model: "gemini-3.1-flash-image",
+            model: "dall-e-3",
             prompt: encodedPrompt,
             size: "1024 * 1024",
-            quality: "medium",
+            quality: "standard",
         })
 
         const base64Image = result.data?.[0]?.b64_json;
